@@ -4,6 +4,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -50,16 +51,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
-    def dagger_version = '2.51.1'
-
-    implementation "com.google.dagger:dagger:${dagger_version}"
-    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
-
-    implementation "com.google.dagger:dagger-android:${dagger_version}"
-    implementation "com.google.dagger:dagger-android-support:${dagger_version}"
-    kapt "com.google.dagger:dagger-android-processor:${dagger_version}"
-
-    def kotlin_version = '2.0.0'
+    def kotlin_version = '1.9.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.13.1'
@@ -75,7 +67,16 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
+    def hilt_version = '2.48'
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
