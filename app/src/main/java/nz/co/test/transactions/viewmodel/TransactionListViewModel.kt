@@ -17,8 +17,8 @@ class TransactionListViewModel @Inject constructor(
     private val transactionApi: TransactionApi
 ) : ViewModel() {
 
-    private val _transactions = MutableStateFlow<Array<Transaction>>(emptyArray())
-    val transactions: StateFlow<Array<Transaction>> = _transactions.asStateFlow()
+    private val _transactions = MutableStateFlow<List<Transaction>>(emptyList())
+    val transactions: StateFlow<List<Transaction>> = _transactions.asStateFlow()
 
     fun fetchTransactions() {
         viewModelScope.launch {

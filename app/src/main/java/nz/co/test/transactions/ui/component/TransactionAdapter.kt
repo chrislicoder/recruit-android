@@ -1,14 +1,16 @@
-package nz.co.test.transactions.uicomponents
+package nz.co.test.transactions.ui.component
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.R
 import nz.co.test.transactions.services.Transaction
+import nz.co.test.transactions.util.Util.processDateString
+import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.time.format.DateTimeFormatter
 
 class TransactionAdapter(private val clickListener: (Int) -> Unit) :
     RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
@@ -33,16 +35,22 @@ class TransactionAdapter(private val clickListener: (Int) -> Unit) :
     override fun getItemCount() = transactions.size
 
     class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val transactionDateTextView: TextView = itemView.findViewById(R.id.transactionDateTextView)
+        private val transactionDateTextView: TextView =
+            itemView.findViewById(R.id.transactionDateTextView)
         private val summaryTextView: TextView = itemView.findViewById(R.id.summaryTextView)
         private val debitTextView: TextView = itemView.findViewById(R.id.debitTextView)
         private val creditTextView: TextView = itemView.findViewById(R.id.creditTextView)
 
         fun bind(transaction: Transaction, clickListener: (Int) -> Unit) {
-            transactionDateTextView.text = transaction.transactionDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+            transactionDateTextView.text = processDateString(transaction.transactionDate)
+
             summaryTextView.text = transaction.summary
+
             debitTextView.text = DecimalFormat.getCurrencyInstance().format(transaction.debit)
+            debitTextView.isVisible = transaction.debit > BigDecimal.ZERO
+
             creditTextView.text = DecimalFormat.getCurrencyInstance().format(transaction.credit)
+            creditTextView.isVisible = transaction.credit > BigDecimal.ZERO
 
             // Bind transaction data to views
             itemView.setOnClickListener {

@@ -1,4 +1,4 @@
-package nz.co.test.transactions.fragments
+package nz.co.test.transactions.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import nz.co.test.transactions.R
-import nz.co.test.transactions.uicomponents.TransactionAdapter
+import nz.co.test.transactions.ui.component.TransactionAdapter
 import nz.co.test.transactions.viewmodel.TransactionListViewModel
 
 @AndroidEntryPoint
@@ -39,8 +39,7 @@ class TransactionListFragment : Fragment(R.layout.fragment_transaction_list) {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.transactions.collectLatest { transactions ->
-                    if (transactions.isEmpty()) return@collectLatest
-                    adapter.updateTransaction(transactions.toList())
+                    adapter.updateTransaction(transactions)
                 }
             }
         }

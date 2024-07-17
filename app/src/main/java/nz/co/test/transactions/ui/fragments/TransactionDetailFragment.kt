@@ -1,4 +1,4 @@
-package nz.co.test.transactions.fragments
+package nz.co.test.transactions.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
