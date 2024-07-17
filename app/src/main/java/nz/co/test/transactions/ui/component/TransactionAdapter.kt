@@ -8,7 +8,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.R
 import nz.co.test.transactions.services.Transaction
-import nz.co.test.transactions.util.Util.processDateString
+import nz.co.test.transactions.util.Util.getDisplayedAmount
+import nz.co.test.transactions.util.Util.getDisplayedDateString
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
@@ -42,14 +43,14 @@ class TransactionAdapter(private val clickListener: (Int) -> Unit) :
         private val creditTextView: TextView = itemView.findViewById(R.id.creditTextView)
 
         fun bind(transaction: Transaction, clickListener: (Int) -> Unit) {
-            transactionDateTextView.text = processDateString(transaction.transactionDate)
+            transactionDateTextView.text = getDisplayedDateString(transaction.transactionDate)
 
             summaryTextView.text = transaction.summary
 
-            debitTextView.text = DecimalFormat.getCurrencyInstance().format(transaction.debit)
+            debitTextView.text = getDisplayedAmount(transaction.debit)
             debitTextView.isVisible = transaction.debit > BigDecimal.ZERO
 
-            creditTextView.text = DecimalFormat.getCurrencyInstance().format(transaction.credit)
+            creditTextView.text = getDisplayedAmount(transaction.credit)
             creditTextView.isVisible = transaction.credit > BigDecimal.ZERO
 
             // Bind transaction data to views
