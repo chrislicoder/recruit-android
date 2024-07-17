@@ -31,6 +31,7 @@ class TransactionListFragment : Fragment(R.layout.fragment_transaction_list) {
         transactionList = view.findViewById(R.id.recyclerView)
 
         val adapter = TransactionAdapter { transactionId ->
+            viewModel.setSelectedTransactionId(transactionId)
             findNavController().navigate(R.id.action_transactionListFragment_to_transactionDetailFragment)
         }
         transactionList.layoutManager = LinearLayoutManager(context)

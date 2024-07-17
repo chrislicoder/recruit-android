@@ -8,13 +8,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import nz.co.test.transactions.data.TransactionRepository
 import nz.co.test.transactions.services.Transaction
 import nz.co.test.transactions.services.TransactionApi
 import javax.inject.Inject
 
 @HiltViewModel
 class TransactionListViewModel @Inject constructor(
-    private val transactionApi: TransactionApi
+    private val transactionApi: TransactionApi,
+    private val repository: TransactionRepository
 ) : ViewModel() {
 
     private val _transactions = MutableStateFlow<List<Transaction>>(emptyList())
@@ -23,13 +25,19 @@ class TransactionListViewModel @Inject constructor(
     fun fetchTransactions() {
         viewModelScope.launch {
             try {
-                _transactions.value = transactionApi.getTransactions()
-                for (transaction in _transactions.value) {
-                    Log.d("print exception", transaction.toString())
+                if (repository.getTransactions().isNotEmpty()) {
+                    _transactions.value = repository.getTransactions()
+                } else {
+                    _transactions.value = transactionApi.getTransactions()
+                    repository.cacheTransactions(_transactions.value)
                 }
             } catch (e: Exception) {
                 Log.d("print exception", e.toString())
             }
         }
+    }
+
+    fun setSelectedTransactionId(selectedTransactionIndex: Int) {
+        repository.setSelectedTransactionIndex(selectedTransactionIndex)
     }
 }
