@@ -17,7 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "nz.co.test.transactions.HiltTestRunner"
     }
 
     buildTypes {
@@ -76,8 +76,18 @@ dependencies {
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
     testImplementation "androidx.arch.core:core-testing:2.2.0"
 
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    // Hilt testing dependencies
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    // Mockito dependencies
+    androidTestImplementation 'org.mockito:mockito-core:4.0.0'
+    androidTestImplementation 'org.mockito:mockito-android:4.0.0'
 }
 
 // Allow references to generated code

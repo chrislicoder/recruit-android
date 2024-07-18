@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TransactionRepository @Inject constructor() {
+open class TransactionRepository @Inject constructor() {
 
     private var selectedTransactionIndex: Int = 0
 
