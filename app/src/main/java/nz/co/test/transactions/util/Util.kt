@@ -37,6 +37,15 @@ object Util {
         }
     }
 
+    fun getDisplayedGST(transactionAmount: BigDecimal): String {
+        return try {
+            val gst = transactionAmount.times(BigDecimal(0.15))
+            return DecimalFormat.getCurrencyInstance().format(gst)
+        } catch (_: Exception) {
+            ""
+        }
+    }
+
     fun <T> LifecycleOwner.collectStateFlow(
         stateFlow: StateFlow<T>,
         state: Lifecycle.State = Lifecycle.State.RESUMED,

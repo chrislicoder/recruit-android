@@ -5,4 +5,5 @@
     <string name="summary_title">Summary:</string>
     <string name="debit_title">Debit:</string>
     <string name="credit_title">Credit:</string>
+    <string name="gst_title">GST:</string>
 </resources>

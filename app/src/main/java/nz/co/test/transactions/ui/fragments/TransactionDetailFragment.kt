@@ -12,6 +12,7 @@ import nz.co.test.transactions.services.Transaction
 import nz.co.test.transactions.util.Util
 import nz.co.test.transactions.util.Util.collectStateFlow
 import nz.co.test.transactions.util.Util.getDisplayedAmount
+import nz.co.test.transactions.util.Util.getDisplayedGST
 import nz.co.test.transactions.viewmodel.TransactionDetailViewModel
 import java.math.BigDecimal
 
@@ -23,6 +24,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
     private lateinit var tvSummary: TextView
     private lateinit var tvDebit: TextView
     private lateinit var tvCredit: TextView
+    private lateinit var tvGst: TextView
     private lateinit var debitContainer: View
     private lateinit var creditContainer: View
 
@@ -32,6 +34,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
         tvSummary = view.findViewById(R.id.tvSummary)
         tvDebit = view.findViewById(R.id.tvDebit)
         tvCredit = view.findViewById(R.id.tvCredit)
+        tvGst = view.findViewById(R.id.tvGst)
         debitContainer = view.findViewById(R.id.debitContainer)
         creditContainer = view.findViewById(R.id.creditContainer)
 
@@ -54,5 +57,12 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
 
         creditContainer.isVisible = transaction.credit > BigDecimal.ZERO
         tvCredit.text = getDisplayedAmount(transaction.credit)
+
+        val processedAmount = when {
+            transaction.debit > BigDecimal.ZERO -> transaction.debit
+            transaction.credit > BigDecimal.ZERO -> transaction.credit
+            else -> BigDecimal.ZERO
+        }
+        tvGst.text = getDisplayedGST(processedAmount)
     }
 }
