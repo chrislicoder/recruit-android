@@ -36,7 +36,7 @@ class TransactionDetailViewModelTest {
     }
 
     @Test
-    fun `fetchSelectedTransaction fetches transaction from repository`() =
+    fun `test fetches transaction from repository`() =
         coroutineTestRule.runBlockingTest {
             // Arrange
             val transaction = Transaction(
