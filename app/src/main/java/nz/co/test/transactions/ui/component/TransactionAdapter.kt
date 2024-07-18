@@ -43,6 +43,7 @@ class TransactionAdapter(private val clickListener: (Int) -> Unit) :
         private val creditTextView: TextView = itemView.findViewById(R.id.creditTextView)
 
         fun bind(transaction: Transaction, clickListener: (Int) -> Unit) {
+            // Bind transaction data to the view
             transactionDateTextView.text = getDisplayedDateString(transaction.transactionDate)
 
             summaryTextView.text = transaction.summary
@@ -53,7 +54,7 @@ class TransactionAdapter(private val clickListener: (Int) -> Unit) :
             creditTextView.text = getDisplayedAmount(transaction.credit)
             creditTextView.isVisible = transaction.credit > BigDecimal.ZERO
 
-            // Bind transaction data to views
+            // setup item view on click listener
             itemView.setOnClickListener {
                 clickListener(transaction.id)
             }

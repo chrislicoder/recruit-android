@@ -33,6 +33,7 @@ class TransactionListFragment : Fragment(R.layout.fragment_transaction_list) {
         transactionList.layoutManager = LinearLayoutManager(context)
         transactionList.adapter = adapter
 
+        // Display the transaction list after fetching transaction list from API call or local repository cache
         collectStateFlow(viewModel.transactions) { transactions ->
             adapter.updateTransaction(transactions)
         }

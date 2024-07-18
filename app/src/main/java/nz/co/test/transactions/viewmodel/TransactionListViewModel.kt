@@ -25,9 +25,11 @@ class TransactionListViewModel @Inject constructor(
     fun fetchTransactions() {
         viewModelScope.launch {
             try {
+                // Try to fetch the local repository cache
                 if (repository.getTransactions().isNotEmpty()) {
                     _transactions.value = repository.getTransactions()
                 } else {
+                    // if empty, try to fetch from the api
                     _transactions.value = transactionApi.getTransactions()
                     repository.cacheTransactions(_transactions.value)
                 }

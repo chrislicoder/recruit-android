@@ -20,6 +20,7 @@ class TransactionDetailViewModel @Inject constructor(
     val selectedTransaction: StateFlow<Transaction?> = _selectedTransaction.asStateFlow()
 
     fun fetchSelectedTransaction() {
+        // fetch the transaction detail from local repository
         viewModelScope.launch {
             _selectedTransaction.value = repository.getSelectedTransaction()
         }

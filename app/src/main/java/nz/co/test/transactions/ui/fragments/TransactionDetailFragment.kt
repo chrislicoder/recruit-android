@@ -38,6 +38,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
         debitContainer = view.findViewById(R.id.debitContainer)
         creditContainer = view.findViewById(R.id.creditContainer)
 
+        // Display the transaction detail when the transaction is fetched from local repository
         collectStateFlow(viewModel.selectedTransaction) { transaction ->
             transaction?.let {
                 displayTransactionDetail(it)
